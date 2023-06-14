@@ -7,4 +7,6 @@ public interface BasketRepository extends JpaRepository<Basket, Long> {
     Integer countByMemberAndStatus(Member member, Boolean status);
 
     Basket findBasketByMemberAndStatus(Member member, Boolean status);
+
+    Basket findBasketByMember(Member member);
 }

@@ -27,7 +27,7 @@ public class MemberService {
     public PostMemberRes createMember(PostMemberReq postMemberReq) throws BaseException {
         // 사용된 이메일인지 확인
         if(memberRepository.countByEmail(postMemberReq.getEmail()) >= 1)
-            throw new BaseException(POST_USERS_EXISTS_EMAIL);
+            throw new BaseException(DUPLICATED_EMAIL);
         String pwd;
         try {
             // 암호화 : postUserReq에서 제공받은 비밀번호를 보안을 위해 암호화시켜 DB에 저장
@@ -103,5 +103,17 @@ public class MemberService {
     public void modifyUserName(PatchMemberReq patchMemberReq) {
         Member member = memberRepository.getReferenceById(patchMemberReq.getMemberId());
         member.updateNickName(patchMemberReq.getNickName());
+    }
+
+    /**
+     * 회원 탈퇴
+     */
+    @Transactional
+    public void deleteUser(Long memberId) throws BaseException {
+        try {
+            memberRepository.deleteById(memberId);
+        } catch (Exception e) {
+            throw new BaseException(DATABASE_ERROR);
+        }
     }
 }

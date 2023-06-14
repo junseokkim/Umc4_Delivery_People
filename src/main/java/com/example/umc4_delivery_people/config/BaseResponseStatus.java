@@ -25,17 +25,19 @@ public enum BaseResponseStatus {
     // [POST] /users
     POST_USERS_EMPTY_EMAIL(false, 2015, "이메일을 입력해주세요."),
     POST_USERS_INVALID_EMAIL(false, 2016, "이메일 형식을 확인해주세요."),
-    POST_USERS_EXISTS_EMAIL(false,2017,"중복된 이메일입니다."),
+    POST_USERS_INVALID_NUMBER(false, 2017,"전화번호 형식을 확인해주세요."),
 
     // [POST] /stores
-    POST_STORES_EXISTS_NAME(false, 2019, "중복된 가게명입니다."),
-    GET_STORES_NOEXISTS_NAME(false,2020, "존재하지 않는 가게명입니다."),
-    GET_STORES_NOEXISTS_TYPE(false,2021,"해당 타입의 가게가 존재하지 않습니다."),
-    GET_STORES_NOEXISTS_CATEGORY(false,2022,"해당 카테고리의 가게가 존재하지 않습니다."),
+    POST_STORES_EXISTS_NAME(false, 2020, "중복된 가게명입니다."),
+    GET_STORES_NOEXISTS_NAME(false,2021, "존재하지 않는 가게명입니다."),
+    GET_STORES_NOEXISTS_TYPE(false,2022,"해당 타입의 가게가 존재하지 않습니다."),
+    GET_STORES_NOEXISTS_CATEGORY(false,2023,"해당 카테고리의 가게가 존재하지 않습니다."),
 
     // [POST] /menus
-    POST_MENUS_EXISTS_NAME(false, 2023, "중복된 메뉴명입니다."),
+    POST_MENUS_EXISTS_NAME(false, 2030, "중복된 메뉴명입니다."),
 
+    // [GET] /basket
+    GET_BASKET_NOEXISTS(false, 2040, "현재 장바구니가 존재하지 않습니다."),
     /**
      * 3000 : Response 오류
      */

@@ -1,5 +1,6 @@
 package com.example.umc4_delivery_people.basket;
 
+import com.example.umc4_delivery_people.basket.dto.GetBasketRes;
 import com.example.umc4_delivery_people.basket.dto.PostBasketReq;
 import com.example.umc4_delivery_people.basket.dto.PostBasketRes;
 import com.example.umc4_delivery_people.config.BaseException;
@@ -38,6 +39,20 @@ public class BasketService {
         } catch (Exception e) { // DB에 이상이 있는 경우 에러 메시지를 보냄
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
+    }
+
+    /**
+     * DB에서 장바구니 조회
+     */
+    public GetBasketRes searchBasket(Long memberId) throws BaseException {
+        Member member = memberRepository.getReferenceById(memberId);
+        if(basketRepository.countByMemberAndStatus(member, true) == 1) {
+            Basket basket = basketRepository.findBasketByMember(member);
+            return new GetBasketRes(basket.getId(), member.getNickName(), basket.getStore().getName());
+        } else {
+            throw new BaseException(BaseResponseStatus.GET_BASKET_NOEXISTS);
+        }
+
     }
 
 }

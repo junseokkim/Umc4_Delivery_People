@@ -13,4 +13,11 @@ public class ValidationRegex {
         Matcher matcher = pattern.matcher(target);
         return matcher.find();
     }
+
+    public static boolean isRegexPhoneNumber(String target) {
+        String regex = "^(010|011|016|017|018|019)-[0-9]{3,4}-[0-9]{4}$";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(target);
+        return matcher.find();
+    }
 }

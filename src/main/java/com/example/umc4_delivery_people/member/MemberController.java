@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.example.umc4_delivery_people.config.BaseResponseStatus.INVALID_USER_JWT;
+import static com.example.umc4_delivery_people.config.BaseResponseStatus.POST_USERS_INVALID_NUMBER;
 import static com.example.umc4_delivery_people.utils.ValidationRegex.isRegexEmail;
+import static com.example.umc4_delivery_people.utils.ValidationRegex.isRegexPhoneNumber;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,7 +29,10 @@ public class MemberController {
      */
     @PostMapping("/create")
     public BaseResponse<PostMemberRes> createMember(@RequestBody PostMemberReq postMemberReq) {
+        // 이메일 유효성 검사
         if(!isRegexEmail(postMemberReq.getEmail())) return new BaseResponse<>(BaseResponseStatus.POST_USERS_INVALID_EMAIL);
+        // 전화번호 유효성 검사
+        if(!isRegexPhoneNumber(postMemberReq.getPhoneNumber())) return new BaseResponse<>(POST_USERS_INVALID_NUMBER);
         try {
             return new BaseResponse<>(memberService.createMember(postMemberReq));
         } catch (BaseException e) {
@@ -87,6 +92,20 @@ public class MemberController {
             return new BaseResponse<>(result);
         }  catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    /**
+     * 회원 탈퇴
+     */
+    @DeleteMapping("/delete/{memberId}")
+    public BaseResponse<String> deleteUser(@PathVariable("memberId") Long memberId) {
+        try {
+            memberService.deleteUser(memberId);
+            String result = "회원이 정상적으로 삭제되었습니다.";
+            return new BaseResponse<>(result);
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
         }
     }
 }
